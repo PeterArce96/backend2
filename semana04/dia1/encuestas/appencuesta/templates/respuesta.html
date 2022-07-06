@@ -1,0 +1,12 @@
+<ol>
+    <li><strong>Nombre : </strong>{{nombre}}</li>
+    <li><strong>Rol : </strong>{{rol}}</li>
+    <li>
+        <strong>Idiomas : </strong>
+        <ul>
+            {% for i in idiomas %}
+                <li>{{i}}</li>
+            {% endfor %}
+        </ul>
+    </li>
+</ol>
