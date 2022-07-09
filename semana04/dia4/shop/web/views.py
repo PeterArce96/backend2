@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from .models import Categoria,Marca,Producto
 
+from .carrito import Cart
+
 ################### CATALOGO DE PRODUCTOS
 def index(request):
     listaCategorias = Categoria.objects.all()
@@ -70,5 +72,15 @@ def productosPorNombre(request):
 def carrito(request):
     return render(request,'carrito.html')
 
+def agregarCarrito(request,producto_id):
+    objProducto = Producto.objects.get(pk=producto_id)
+    carritoProducto = Cart(request)
+    carritoProducto.add(objProducto,1)
+    print(request.session.get("cart"))
+
+    return render(request,'carrito.html')
+
+
+############################# CUENTA DE USUARIO
 def login(request):
     return render(request,'login.html')
