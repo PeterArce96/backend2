@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from .models import Categoria,Marca,Producto
 
@@ -73,14 +73,71 @@ def carrito(request):
     return render(request,'carrito.html')
 
 def agregarCarrito(request,producto_id):
+    if request.method == 'POST':
+        cantidad = int(request.POST['cantidad'])
+    else:
+        cantidad  = 1
     objProducto = Producto.objects.get(pk=producto_id)
     carritoProducto = Cart(request)
-    carritoProducto.add(objProducto,1)
+    carritoProducto.add(objProducto,cantidad)
     print(request.session.get("cart"))
 
     return render(request,'carrito.html')
 
+def eliminarProductoCarrito(request,producto_id):
+    objProducto = Producto.objects.get(pk=producto_id)
+    carritoProducto = Cart(request)
+    carritoProducto.delete(objProducto)
 
+    return render(request,'carrito.html')
+
+def limpiarCarrito(request):
+    carritoProducto = Cart(request)
+    carritoProducto.clear()
+
+    return render(request,'carrito.html')
+    
 ############################# CUENTA DE USUARIO
-def login(request):
+
+from django.contrib.auth.models import User
+from django.contrib.auth import login,logout,authenticate
+
+def crearUsuario(request):
+    if request.method == "POST":
+        dataUsuario = request.POST['nuevoUsuario']
+        dataPassword = request.POST['nuevoPassword']
+
+        nuevoUsuario = User.objects.create_user(username=dataUsuario,password=dataPassword)
+        if nuevoUsuario is not None:
+            login(request,nuevoUsuario)
+            return redirect('/cuenta')
+        
+
+        return render(request,'login.html')
+
+def loginUsuario(request):
+    context = {}
+    if request.method == 'POST':
+        #login de usuarios
+        dataUsuario = request.POST['usuario']
+        dataPassword = request.POST['password']
+
+        usuarioAuth = authenticate(request,username=dataUsuario,password=dataPassword)
+        if usuarioAuth is not None:
+            login(request,usuarioAuth)
+            return redirect('/cuenta')
+        else:
+            context = {
+                'error':'datos incorrectos'
+            }
+
+    return render(request,'login.html',context)
+
+def logoutUsuario(request):
+    logout(request)
     return render(request,'login.html')
+
+def cuentaUsuario(request):
+    context = {}
+
+    return render(request,'cuenta.html',context)
