@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'api',
     'rest_framework',
+    'cloudinary',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -134,3 +136,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+cloudinary.config( 
+    cloud_name = "parcecodigog15", 
+    api_key = "423686832888737", 
+    api_secret = "H__eNm9YMtxHOX2VBYlRWzy4LFI" 
+)
