@@ -1,0 +1,12 @@
+Comandos de mongodb
+1.- mongo --> Iniciar el mongodbshell
+2.- show dbs --> Muestra las bases de datos
+3.- use cursos--> crea la base de datos cursos
+Nota: sólo está definida, pero no existe porque no contiene ningún documento todavía.
+4.- db.alumnos.insertOne()-->insertar un registro en la coleción alumnos
+5.-show collections --> Muestra las colecciones de la base de datos
+6.- db.alumnos.find() --> Muestra todos los documentos(registros) de la colección alumnos
+7.- db.alumnos.find().pretty()--> Para mostrar el registro de forma más visual
+8.-db.alumnos.insertMany()-->Insertar varios documentos a la colección
+9.- db.alumnos.updateOne() --> actualizar un registro
+10.- db.alumnos.deleteOne() --> eliminar un registro

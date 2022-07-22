@@ -1,0 +1,30 @@
+
+[{
+    "id":1,
+    "nombre":"peter arce",
+    "email":"parce0496@gmail.com",
+    "celular":"951569544",
+    "github":"https://github.com/PeterArce96"
+}]
+
+[{
+    "id":1,
+    "nombre":"python"
+}]
+
+[{
+    "fecha":"2022-07-21",
+    "alumno":{
+        "id":1,
+        "nombre":"peter arce"
+    },
+    "nivel":"basico",
+    "modulo":"backend",
+    "cursos":[
+        {
+            "id":1,
+            "nombre":"python",
+            "nota":10
+        }
+    ]
+}]
