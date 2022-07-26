@@ -4,3 +4,6 @@ pymongo[srv]
 python-dotenv
 Flask-PyMongo
 mongoengine
+flask-mongoengine
+marshmallow-mongoengine
+six
