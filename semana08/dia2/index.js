@@ -1,12 +1,11 @@
 const express = require('express');
-
-
+const cors = require('cors')
 const mysqlConnection = require('./database');
 
 const app = express();
 const port = 5000;
 
-
+app.use(cors())
 //permite que el servidor reciba data en json
 app.use(express.json());
 
@@ -37,9 +36,9 @@ app.post('/alumno',(req,res)=>{
     
     mysqlConnection.query(query,(err,rows,fields)=>{
         if(!err){
-            res.json({
-                'status':true,
-                'content':'alumno creado'
+            const queryNewAlumno = 'select * from tbl_alumno order by alumno_id desc limit 1';
+            mysqlConnection.query(queryNewAlumno,(err,rows,fields)=>{
+                res.json(rows[0]);
             })
         }else{
             console.log(err);
