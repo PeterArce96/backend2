@@ -7,4 +7,5 @@ const config = {
     mysql_host: process.env.MYSQL_HOST || 'localhost',
     mysql_db: process.env.MYSQL_DB || 'db_codigo_g15'
 }
+
 module.exports = {config};

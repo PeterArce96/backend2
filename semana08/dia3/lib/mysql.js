@@ -2,12 +2,13 @@ const mysql = require('mysql')
 const {config} = require('../config');
 
 class MysqlLib{
+
     constructor(){
         this.dbSettings = {
             host : config.mysql_host,
-            user: config.mysql_user,
+            user : config.mysql_user,
             password : config.mysql_pwd,
-            database: config.mysql_db
+            database : config.mysql_db
         }
     }
 
@@ -32,3 +33,5 @@ class MysqlLib{
         })
     }
 }
+
+module.exports = MysqlLib;
