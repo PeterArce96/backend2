@@ -19,5 +19,6 @@ app.get('/',(req,res)=>{
 
 // rutas
 app.use('/tarea',require('./routes/tarea.route'));
+app.use('/usuario',require('./routes/usuario.route'));
 
 module.exports = app;

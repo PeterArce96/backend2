@@ -13,7 +13,41 @@ tareaController.create = async(req,res)=>{
         estado
     })
     await nuevaTarea.save();
-    res.json(nuevaTarea);
+    res.json({
+        status:true,
+        content:'nueva tarea'
+    })
+}
+
+tareaController.update = async (req,res)=>{
+    const {id} = req.params;
+    // await tareaModel.updateOne({_id:id},req.body);
+    // const tareaEditada = await tareaModel.findOne({_id:id})
+    const tareaEditada = await tareaModel.findOneAndUpdate({_id: id},req.body,{
+        returnOriginal: false
+    })
+
+    res.json(tareaEditada.toJSON());
+}
+
+tareaController.deleteOne = async (req,res)=>{
+    const{id} = req.params;
+    // await tareaModel.remove({_id:id});
+    // res.json({
+    //     status:true,
+    //     content:'tarea eliminada'
+    // })
+    tareaModel.findByIdAndDelete(id,function(err,docs){
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.json({
+                status:true,
+                content:docs
+            })
+        }
+    })
 }
 
 module.exports = tareaController;
