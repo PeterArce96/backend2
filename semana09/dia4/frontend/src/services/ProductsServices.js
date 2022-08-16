@@ -5,8 +5,10 @@ export const GetAllProducts = async (preferencia_id) => {
   if (preferencia_id) {
     query_params.append('preferencia', preferencia_id)
   }
-  const response = await fetch(`${API_URL}/productos/productos/list?${query_params}`)
+  // const response = await fetch(`${API_URL}/productos/productos/list?${query_params}`)
+  const response = await fetch(`${API_URL}/producto`)
   const data = await response.json()
+  console.log(data);
   return data
 }
 

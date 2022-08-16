@@ -1,6 +1,12 @@
 [{
-    "productNombre": "Producto 1",
-    "productPrecio": 100,
-    "productDescricion": "Descripción del producto 1",
-    "productImagen": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+    "productoNombre": "Javascript dev 1",
+    "productoPrecio": 100,
+    "productoDescripcion": "Polo Javascript dev modelo 1",
+    "productoImagen": "https://res.cloudinary.com/parcecodigog15/image/upload/v1660688672/tshirt01_bygjsp.jpg"
+},
+{
+    "productoNombre": "Javascript dev 2",
+    "productoPrecio": 200,
+    "productoDescripcion": "Polo Javascript dev modelo 2",
+    "productoImagen": "https://res.cloudinary.com/parcecodigog15/image/upload/v1660688672/tshirt01_bygjsp.jpg"
 }]
