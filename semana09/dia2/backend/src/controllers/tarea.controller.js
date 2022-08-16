@@ -1,6 +1,7 @@
 const tareaController = {};
 
 const tareaModel = require('../models/tarea.model');
+const boom = require('@hapi/boom');
 
 tareaController.getAll = async (req,res) =>{
     const tareas = await tareaModel.find();
@@ -11,16 +12,23 @@ tareaController.getAll = async (req,res) =>{
 }
 
 tareaController.create = async (req,res) =>{
-    const {nombre,estado} = req.body;
-    const nuevaTarea = new tareaModel({
-        nombre,
-        estado
-    })
-    await nuevaTarea.save();
-    res.json({
-        status:true,
-        content:nuevaTarea
-    });
+    //const {nombre,estado} = req.body;
+    try{
+        console.log(req.body);
+        const nuevaTarea = new tareaModel(req.body)
+        await nuevaTarea.save();
+        res.json({
+            status:true,
+            content:nuevaTarea
+        });
+    } catch(error){
+        /*res.status(500).json({
+            status:false,
+            content:'Error :' + error
+        })*/
+        res.status(502).json(boom.badGateway(error))
+    }
+    
 }
 
 tareaController.update = async (req,res) =>{

@@ -1,8 +1,60 @@
 import React from 'react';
+import AuthService from '../services/auth.service';
+import {createBrowserHistory} from 'history';
 
 class Auth extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            usuario : '',
+            password : '',
+            loading : false,
+            message : ''
+        }
+        this.onChangeUsuario = this.onChangeUsuario.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.handlerLogin = this.handlerLogin.bind(this);
+    }
+
+    onChangeUsuario(e){
+        this.setState({
+            usuario : e.target.value
+        })
+    }
+
+    onChangePassword(e){
+        this.setState({
+            password : e.target.value
+        })
+    }
+    
+
+    handlerLogin(e){
+        e.preventDefault();
+
+        this.setState({
+            message:'',
+            loading:true
+        })
+
+        console.log('usuario : ' + this.state.usuario);
+        console.log('password : ' + this.state.password);
+
+        AuthService.login(this.state.usuario,this.state.password).then(
+            ()=>{
+                const history = createBrowserHistory();
+                history.push('/');
+                window.location.reload();
+            },
+            error =>{
+                const mensajeError = 'datos no validos';
+                this.setState({
+                    loading:false,
+                    message:mensajeError
+                })
+            }
+        )
+
     }
 
     render(){
@@ -16,13 +68,24 @@ class Auth extends React.Component {
                                     <div className="card shadow-lg border-0 rounded-lg mt-5">
                                         <div className="card-header"><h3 className="text-center font-weight-light my-4">Login</h3></div>
                                         <div className="card-body">
-                                            <form>
+                                            <form onSubmit={this.handlerLogin}>
                                                 <div className="form-floating mb-3">
-                                                    <input className="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                    <label for="inputEmail">Email address</label>
+                                                    <input className="form-control" 
+                                                    id="inputText"
+                                                    type="text" 
+                                                    placeholder="usuario"
+                                                    value={this.state.usuario}
+                                                    onChange={this.onChangeUsuario}
+                                                    />
+                                                    <label for="inputEmail">Usuario</label>
                                                 </div>
                                                 <div className="form-floating mb-3">
-                                                    <input className="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                                    <input className="form-control" 
+                                                    id="inputPassword" 
+                                                    type="password" 
+                                                    placeholder="Password" 
+                                                    value={this.state.password}
+                                                    onChange={this.onChangePassword}/>
                                                     <label for="inputPassword">Password</label>
                                                 </div>
                                                 <div className="form-check mb-3">
@@ -31,9 +94,16 @@ class Auth extends React.Component {
                                                 </div>
                                                 <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                     <a className="small" href="password.html">Forgot Password?</a>
-                                                    <a className="btn btn-primary" href="index.html">Login</a>
+                                                    <input type="submit" className='btn btn-primary' value='Login' />
                                                 </div>
                                             </form>
+                                            {this.state.message && (
+                                                <div className='form-group'>
+                                                    <div className='alert alert-danger'>
+                                                        {this.state.message}
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="card-footer text-center py-3">
                                             <div className="small"><a href="register.html">Need an account? Sign up!</a></div>
