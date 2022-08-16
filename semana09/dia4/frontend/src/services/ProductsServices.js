@@ -19,10 +19,12 @@ export const GetProductById = async (id) => {
 }
 
 export const PostProduct = async (product) => {
-  const response = await fetch(`${API_URL}/productos/productos/create`, {
+  const response = await fetch(`${API_URL}/producto`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      "type": "formData"
     },
     body: JSON.stringify(product)
   })
