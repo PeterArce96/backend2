@@ -20,10 +20,10 @@ productoController.getAll = async (req,res)=>{
 }
 productoController.create = async (req,res)=>{
     try{
-        console.log("archivo : " + req.files.productoImagen2);
-        cloudinary.v2.uploader.upload(req.files.productoImagen2, {upload_preset: "my_preset"}, (error, result)=>{
-            console.log(result, error);
-        });
+        // console.log("archivo : " + req.files);
+        // cloudinary.v2.uploader.upload(req.files.productoImagen2, {upload_preset: "my_preset"}, (error, result)=>{
+        //     console.log(result, error);
+        // });
 
         const nuevoProducto = new productoModel(req.body)
         await nuevoProducto.save();
@@ -39,6 +39,31 @@ productoController.create = async (req,res)=>{
             content: error
         })
     }
+}
+
+productoController.uploadImageAndCreate = async (req,res)=> {
+    productoImagen = req.files.productoImagen
+    console.log(productoImagen.name);
+
+    let uploadPath;
+    uploadPath = '../backend/src/uploads/' + productoImagen.name;
+
+    productoImagen.mv(uploadPath,function(err){
+        if(err){
+            res.status(502).json({
+                success: false,
+                message: "no se pudo subir la imagen",
+                content:err
+            })
+        }
+        else{
+            res.json({
+                success: true,
+                message: "producto e imagen registrado con exito",
+                content:productoImagen.name
+            })
+        }
+    })
 }
 
 module.exports = productoController;
