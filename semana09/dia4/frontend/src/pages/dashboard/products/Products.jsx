@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { GetCategories } from "../../../services/CategoriesServices";
-import { GetAllProducts, PostProduct } from "../../../services/ProductsServices";
+import { GetAllProducts, PostProduct,UploadImage } from "../../../services/ProductsServices";
 import './Products.scss';
 
 export const Products = () => {
     const { setAdminTitle } = useContext(AdminContext);
+    const [productFile,setProductFile] = useState();
     const [listOfProducts, setListOfProducts] = useState([]);
     const [listOfCategories, setListOfCategories] = useState([]);
     const [product, setProduct] = useState({
@@ -51,6 +52,13 @@ export const Products = () => {
     const createProduct = async (event) => {
         event.preventDefault();
         try {
+            /*const responseUrl = await UploadImage(productFile);
+            console.log(responseUrl.content);
+            if(responseUrl.success){
+                setProduct({ ...product, productoImagen: responseUrl.content });
+                console.log(product);
+            }*/
+            
             const response = await PostProduct(product);
             if (response.success) {
                 setBandera(!bandera);
@@ -61,6 +69,7 @@ export const Products = () => {
                     productoImagen: '',
                     categoriaId: 0,
                 })
+                //setProductFile()
             }
         } catch (error) {
             console.log(error)
@@ -77,6 +86,16 @@ export const Products = () => {
             return setProduct({ ...product, [name]: value });
         }
     };
+
+    const handleFileChange = async (event) => {
+        //setProductFile(event.target.files[0])
+            const responseUrl = await UploadImage(event.target.files[0]);
+            console.log(responseUrl.content);
+            if(responseUrl.success){
+                setProduct({ ...product, productoImagen: responseUrl.content });
+                console.log(product);
+            }
+    }
     return (
         <div className='Products'>
             <h4 className='Products-subtitle'>All products</h4>
@@ -84,10 +103,10 @@ export const Products = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>Product name</th>
-                            <th>Product description</th>
-                            <th>Product price</th>
-                            <th>Product image</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Imagen</th>
                             {/* <th>Product category</th> */}
                         </tr>
                     </thead>
@@ -144,10 +163,7 @@ export const Products = () => {
                     <label htmlFor="productoImagen">Product image</label>
                     <input
                         type="file"
-                        name='productoImagen'
-                        id='productoImagen'
-                        value={product.productoImagen}
-                        onChange={handleInputChange}
+                        onChange={handleFileChange}
                     />
                 </div>
                 <div className="form-group">
