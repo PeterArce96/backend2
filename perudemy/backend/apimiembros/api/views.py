@@ -15,11 +15,11 @@ class IndexView(APIView):
 
         return Response(context)
 
-# class CategoriaView(generics.ListAPIView):
-#     queryset = Categoria.objects.all()
-#     serializer_class = CategoriaSerializer
+class CategoriaView(generics.ListAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
 
 
-# class CursoView(generics.ListAPIView):
-#     queryset = Curso.objects.all()
-#     serializer_class = CursoSerializer
+class CursoView(generics.ListAPIView):
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializer
